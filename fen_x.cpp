@@ -105,16 +105,16 @@ std::pair<chess_x::board, chess_x::variant<2>> chess_x::fen_2pc_parser::parse(co
   if (str != "-") {
     var.enp_x[var.side] = str[0] - 'a';
     read_next(fen);
-    if (!str.length() || !isnumber(str[0])) throw fen_error("Bad FEN");
+    if (!str.length() || !isdigit(str[0])) throw fen_error("Bad FEN");
     var.enp_y[var.side] = std::stoi(str);
   }
   var.half_move_clock = 0;
   var.full_move = 1;
   read_next(fen);
-  if (!str.length() || !isnumber(str[0])) return std::pair<board, variant<2>>(bd, var);
+  if (!str.length() || !isdigit(str[0])) return std::pair<board, variant<2>>(bd, var);
   var.half_move_clock = std::stoi(str);
   read_next(fen);
-  if (!str.length() || !isnumber(str[0])) return std::pair<board, variant<2>>(bd, var);
+  if (!str.length() || !isdigit(str[0])) return std::pair<board, variant<2>>(bd, var);
   var.full_move = std::stoi(str);
   if (debug)
     std::cout << var;
