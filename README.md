@@ -14,6 +14,6 @@ Set current board position.
 
 Run perft to depth `n` of the current position.
 
-4. `quit`
+3. `quit`
 
 Quit the program.
