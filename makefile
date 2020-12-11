@@ -1,27 +1,28 @@
-CPPX = g++
-CPP_FLAG = -O2 -std=c++17 -DIS_2PC
-OBJECTS = main.o board_x.o fen_x.o move_gen_x.o perft_x.o uci_x.o
+OBJECTS = main.o chess_util_x.o fen_x.o move_gen_x.o perft_x.o uci_x.o
+CX = gcc
+FLAGS = -O2
 
 ChessX : $(OBJECTS)
-	$(CPPX) -o ChessX $(OBJECTS)
+	$(CX) -o ChessX $(OBJECTS)
 
-main.o : main.cpp chess_def_x.hpp board_x.hpp variant_x.hpp fen_x.hpp move_gen_x.hpp perft_x.hpp uci_x.hpp
-	$(CPPX) -c main.cpp -o main.o $(CPP_FLAG)
+main.o : main.c chess_def_x.h chess_util_x.h fen_x.h move_gen_x.h perft_x.h uci_x.h
+	$(CX) -c main.c $(FLAGS)
 
-board_x.o : board_x.cpp board_x.hpp chess_def_x.hpp
-	$(CPPX) -c board_x.cpp -o board_x.o $(CPP_FLAG)
+chess_util_x.o : chess_util_x.c chess_util_x.h chess_def_x.h
+	$(CX) -c chess_util_x.c $(FLAGS)
 
-fen_x.o : fen_x.cpp fen_x.hpp board_x.hpp variant_x.hpp chess_def_x.hpp
-	$(CPPX) -c fen_x.cpp -o fen_x.o $(CPP_FLAG)
+fen_x.o : fen_x.c fen_x.h chess_util_x.h chess_def_x.h
+	$(CX) -c fen_x.c $(FLAGS)
 
-move_gen_x.o : move_gen_x.cpp move_gen_x.hpp board_x.hpp variant_x.hpp chess_def_x.hpp
-	$(CPPX) -c move_gen_x.cpp -o move_gen_x.o $(CPP_FLAG)
+move_gen_x.o : move_gen_x.c move_gen_x.h chess_def_x.h
+	$(CX) -c move_gen_x.c $(FLAGS)
 
-perft_x.o : perft_x.cpp perft_x.hpp move_gen_x.hpp board_x.hpp variant_x.hpp chess_def_x.hpp fen_x.hpp
-	$(CPPX) -c perft_x.cpp -o perft_x.o $(CPP_FLAG)
+perft_x.o : perft_x.c perft_x.h move_gen_x.h chess_def_x.h fen_x.h chess_util_x.h
+	$(CX) -c perft_x.c $(FLAGS)
 
-uci_x.o : uci_x.cpp uci_x.hpp perft_x.hpp move_gen_x.hpp board_x.hpp variant_x.hpp chess_def_x.hpp fen_x.hpp
-	$(CPPX) -c uci_x.cpp -o uci_x.o $(CPP_FLAG)
+uci_x.o : uci_x.c uci_x.h chess_def_x.h chess_util_x.h fen_x.h move_gen_x.h perft_x.h
+	$(CX) -c uci_x.c $(FLAGS)
 
+.PHONY : clean
 clean :
 	rm ChessX $(OBJECTS)
